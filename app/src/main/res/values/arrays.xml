@@ -1,0 +1,107 @@
+<resources>
+    <string-array name="measures_array">
+        <item>
+            <name>Consumo de combustible,Milla por galón americano,Milla por galón (Imperial),Kilómetro por litro,Litro por 100 Kms.</name>
+        </item>
+        <item>
+            *1    ,*1.201,/2.352,*11,
+            /1.201,*1    ,/2.825,*11,
+            *2.352,*2.825,*1    ,*11,
+            *11   ,*11   ,*11   ,*1
+        </item>
+        <item>
+            <name>Energia,Julio,Kilojulio,Caloría-gramo,Kilocaloría,Vatio-hora,Kilovatio-hora,Electronvoltio,BTU,Térmia estadounidense,Pie-libra fuerza</name>
+        </item>
+        <item>
+            *1        ,/1000     ,/4.184    ,/4184     ,/3600     ,/3.6e+6   ,*6.242e+18,/1055     ,/1.055e+8 ,/1.356     ,
+            *1000     ,*1        ,*239      ,/4.184    ,/3.6      ,/3600     ,*9.223e+18,/1.055    ,/105480   ,*738      ,
+            *4.184    ,/239      ,*1        ,/1000     ,/860      ,/860421   ,*9.223e+18,/252      ,/2.521e+7 ,*3.086    ,
+            *4184     ,*4.184    ,*1000     ,*1        ,*1.162    ,/860      ,*9.223e+18,*3.966    ,/25210    ,*3086     ,
+            *3600     ,*3.6      ,*860      ,/1.162    ,*1        ,/1000     ,*9.223e+18,*3.412    ,/29300    ,*2655     ,
+            *3.6e+6   ,*3600     ,*860421   ,*860      ,*1000     ,*1        ,*9.223e+18,*3412     ,/29.3     ,*2.655e+6 ,
+            /6.242e+18,/9.223e+18,/9.223e+18,/9.223e+18,/9.223e+18,/9.223e+18,*1        ,/9.223e+18,/9.223e+18,/8.462e+18,
+            *1055     ,*1.055    ,*252      ,/3.966    ,/3.412    ,/3412     ,*9.223e+18,*1        ,/99976    ,*778      ,
+            *1.055e+8 ,*105480   ,*2.521e+7 ,*25210    ,*29300    ,*29.3     ,*9.223e+18,*99976    ,*1        ,*7.78e+7  ,
+            *1.356    ,/738      ,/3.086    ,/3086     ,/2655     ,/2.655e+6 ,*8.462e+18,/778      ,/7.78e+7  ,*1
+        </item>
+        <item>
+            Frecuencia,Herzio,Kiloherzio,Megaherzio,Gigaherzio
+        </item>
+        <item>
+            *1         ,/1000   ,/1000000,/1000000000,
+            *1000      ,*1      ,/1000   ,/1000000,
+            *1000000   ,*1000   ,*1      ,/1000,
+            *1000000000,*1000000,*1000   ,*1
+        </item>
+        <item>
+            Presión,Atmósfera,Bar,Libra por pulgada cuadrada,Pascal,Torr
+        </item>
+        <item>
+            *1     ,*1.013 ,*14.696,*101325,*760,
+            /1.013 ,*1     ,*14.504,*100000,*750,
+            /14.696,/14.504,*1     ,*6895  ,*51.715,
+            /101325,/100000,/6895  ,*1     ,/133,
+            /760   ,/750   ,/51.715,*133   ,*1
+        </item>
+        <item>
+            <name>Longitud</name>
+        </item>
+        <item>
+            - Not asigned
+        </item>
+         <item>
+            <name>Masa</name>
+        </item>
+        <item>
+            - Not asigned
+        </item>
+        <item>
+            <name>Tamaño de datos</name>
+        </item>
+        <item>
+            - Not asigned
+        </item>
+        <item>
+            <name>Tasa de transmisión de datos</name>
+        </item>
+        <item>
+            - Not asigned
+        </item>
+        <item>
+            <name>Temperatura</name>
+        </item>
+        <item>
+            - Not asigned
+        </item>
+        <item>
+            <name>Tiempo</name>
+        </item>
+        <item>
+            - Not asigned
+        </item>
+        <item>
+            <name>Velocidad</name>
+        </item>
+        <item>
+            - Not asigned
+        </item>
+        <item>
+            <name>Volumen</name>
+        </item>
+        <item>
+            - Not asigned
+        </item>
+        <item>
+            <name>Ángulo plano</name>
+        </item>
+        <item>
+            - Not asigned
+        </item>
+        <item>
+            <name>Área</name>
+        </item>
+        <item>
+            - Not asigned
+        </item>
+    </string-array>
+</resources>
