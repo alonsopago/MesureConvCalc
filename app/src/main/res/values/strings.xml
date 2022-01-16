@@ -3,4 +3,5 @@
     <string name="choose_a_measure_type">Choose a measure type:</string>
     <string name="measure_types_options">Measure type options:</string>
     <string name="convert_result">%1$d</string>
+    <string name="ConverHelp">Horizontal scroll available, if necessary.</string>
 </resources>
