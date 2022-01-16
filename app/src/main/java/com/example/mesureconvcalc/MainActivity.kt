@@ -19,62 +19,60 @@ import java.text.DecimalFormat
 
 class MainActivity : AppCompatActivity() {
     //Array of types and subtypes measures
-    val measuresTypeSubArray: ArrayList<ArrayList<String>> = ArrayList<ArrayList<String>>()
+    val arrMeasures: ArrayList<ArrayList<String>> = ArrayList<ArrayList<String>>()
     //Array of convertion factors
-    var measureFactorArray: ArrayList<String> = ArrayList<String>()
-    var subClassFactorArray: ArrayList<String> = ArrayList<String>()
-    //Adapters for spinners From and To
-    private lateinit var adapterFrom: ArrayAdapter<String>
-    private lateinit var adapterTo: ArrayAdapter<String>
-    //Spinners
-    lateinit var subMeasureTypeFromSpn: Spinner
-    lateinit var subMeasureTypeToSpn: Spinner
-    lateinit var spnMesClass: Spinner
-    lateinit var subMeasureTypeFromEt: EditText
-    lateinit var subMeasureToTv: TextView
-    //Spinners positions
-    var posMesClass: Int = 0
-    var posMesSubclassFrom: Int = 0
-    var posMesSubclassTo: Int = 0
-    //value to convert
-    //var convertQuantity:Float = 0F
+    var arrFactors: ArrayList<String> = ArrayList<String>()
+    var arrSubClassFactors: ArrayList<String> = ArrayList<String>()
+
+    // *** UI components
+    //Spinners, adapters and positions.
+    lateinit var spnMeasureClass: Spinner
+    var posMeasureClass: Int = 0
+    lateinit var spnMeasureSubClassFrom: Spinner
+    private lateinit var adtMeasureSubClassFrom: ArrayAdapter<String>
+    var posMeasureSubClassFrom: Int = 0
+    lateinit var spnMeasureSubClassTo: Spinner
+    private lateinit var adtMeasureSubClassTo: ArrayAdapter<String>
+    var posMeasureSubClassTo: Int = 0
+
+    //Measures from and to convert
+    lateinit var etMeasureSubClassFrom: EditText
+    lateinit var tvMeasureSubClassTo: TextView
 
      override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
          //Load information array from resource
-        var workArray = resources.getStringArray(R.array.measures_array)
-        // Split loaded information
+        val workArray = resources.getStringArray(R.array.arrMeasures)
+
+         // Split loaded information into measures class and subclass names array
+         // and  convertion factors array
          for(i in (0..workArray.size-1)) {
              if(i.mod(2) == 0){
-                 // pull apart meassures categories and names
-                 measuresTypeSubArray.add(workArray[i].split(",").map { it -> it.trim() } as java.util.ArrayList<String>)
+                 // measures class and subclass names array
+                 arrMeasures.add(workArray[i].split(",").map { it -> it.trim() } as java.util.ArrayList<String>)
              }
              else{
-                 // pull apart factors for measures conversions
-                 measureFactorArray.add(workArray[i])
+                 // convertion factors array
+                 arrFactors.add(workArray[i])
              }
          }
-
-         // Build Measures type List
+         Log.d("Array measures:", arrMeasures.toString())
+         // Build Measures Class List
          var tempArrayMut: MutableList<String> = emptyList<String>().toMutableList()
-         var i: Int
-         for(element in measuresTypeSubArray) {
-             i = 0
+         for(element in arrMeasures) {
              if(element.size > 1) { //Only include defined measures
-                 for (element1 in element) {
-                     if (i == 0) {
-                         tempArrayMut.add(element1)
-                         i = 1
-                     }
-                 }
+                 tempArrayMut.add(element[0])
              }
          }
 
-         subClassFactorArray = measureFactorArray.get(0).toString().split(",").map { it -> it.trim() } as java.util.ArrayList<String>
+        // Build measure factors convertions array
+         //arrSubClassFactors = arrFactors.get(0).toString().split(",").map { it -> it.trim() } as java.util.ArrayList<String>
+         arrSubClassFactors = arrFactors.get(0).split(",").map { it -> it.trim() } as java.util.ArrayList<String>
 
          // Set spinnerClass list
-         spnMesClass = findViewById(R.id.measureTypeSpn)
+         spnMeasureClass = findViewById(R.id.spnMeasureClass)
          // Create an ArrayAdapter using the string array and a default spinner layout
          val adapter = ArrayAdapter(
              this,
@@ -86,34 +84,38 @@ class MainActivity : AppCompatActivity() {
              // Apply the adapter to the spinner
              spinner.adapter = adapter
          }*/
-         spnMesClass.adapter = adapter
+         spnMeasureClass.adapter = adapter
 
          // Set spinnerClass on click
-         spnMesClass.onItemSelectedListener = object :
+         spnMeasureClass.onItemSelectedListener = object :
              AdapterView.OnItemSelectedListener {
              override fun onItemSelected(parent: AdapterView<*>,
                                          view: View, position: Int, id: Long) {
 
                  //Costruct subtype list
-                 posMesClass = position
-                 tempArrayMut = measuresTypeSubArray.get(posMesClass).toString().split(",").map { it -> it.trim() } as java.util.ArrayList<String>
-                 subClassFactorArray = measureFactorArray.get(posMesClass).toString().split(",").map { it -> it.trim() } as java.util.ArrayList<String>
+                 // Aquí voy...
+                 posMeasureClass = position
+                 tempArrayMut = arrMeasures.get(posMeasureClass).toString().split(",").map { it -> it.trim() } as java.util.ArrayList<String>
                  tempArrayMut.removeAt(0)
+                 val temp: String = tempArrayMut[tempArrayMut.size-1]
+                 tempArrayMut[tempArrayMut.size-1] = temp.dropLast(1)
+                 Log.d("Ult elemen array", tempArrayMut[tempArrayMut.size-1])
+                 arrSubClassFactors = arrFactors.get(posMeasureClass).split(",").map { it -> it.trim() } as java.util.ArrayList<String>
 
-                 // Populate adapterFrom with new list
-                 adapterFrom.clear()
-                 adapterFrom.addAll(tempArrayMut)
-                 adapterFrom.notifyDataSetChanged()
-                 subMeasureTypeFromSpn.setSelection(0)
-                 posMesSubclassFrom = 0
+                 // Populate adtMeasureSubClassFrom with new list
+                 adtMeasureSubClassFrom.clear()
+                 adtMeasureSubClassFrom.addAll(tempArrayMut)
+                 adtMeasureSubClassFrom.notifyDataSetChanged()
+                 spnMeasureSubClassFrom.setSelection(0)
+                 posMeasureSubClassFrom = 0
 
-                 // Populate adapterTo with new list
-                 adapterTo.clear()
-                 adapterTo.addAll(tempArrayMut)
-                 adapterTo.notifyDataSetChanged()
-                 subMeasureTypeToSpn.setSelection(0)
-                 posMesSubclassTo = 0
-                 calcConversion(posMesSubclassFrom, posMesSubclassTo)
+                 // Populate adtMeasureSubClassTo with new list
+                 adtMeasureSubClassTo.clear()
+                 adtMeasureSubClassTo.addAll(tempArrayMut)
+                 adtMeasureSubClassTo.notifyDataSetChanged()
+                 spnMeasureSubClassTo.setSelection(0)
+                 posMeasureSubClassTo = 0
+                 calcConversion(posMeasureSubClassFrom, posMeasureSubClassTo)
              }
 
              override fun onNothingSelected(parent: AdapterView<*>) {
@@ -122,25 +124,25 @@ class MainActivity : AppCompatActivity() {
          }
 
          // Build Measures Subtype List
-         tempArrayMut = measuresTypeSubArray.get(posMesClass).toString().split(",").map { it -> it.trim() } as java.util.ArrayList<String>
+         tempArrayMut = arrMeasures.get(posMeasureClass).toString().split(",").map { it -> it.trim() } as java.util.ArrayList<String>
          tempArrayMut.removeAt(0)
          // Set spinnerFrom subclass list for from measure convert
-         subMeasureTypeFromSpn = findViewById(R.id.subMeasureTypeFromSpn)
+         spnMeasureSubClassFrom = findViewById(R.id.spnMeasureSubClassFrom)
          // Create an ArrayAdapter using the string array and a default spinner layout
-         adapterFrom = ArrayAdapter(
+         adtMeasureSubClassFrom = ArrayAdapter(
              this,
              android.R.layout.simple_spinner_item,
              tempArrayMut
          )
-         subMeasureTypeFromSpn.adapter = adapterFrom
+         spnMeasureSubClassFrom.adapter = adtMeasureSubClassFrom
 
          //Set spinnerFrom onClick
-         subMeasureTypeFromSpn.onItemSelectedListener = object :
+         spnMeasureSubClassFrom.onItemSelectedListener = object :
              AdapterView.OnItemSelectedListener {
              override fun onItemSelected(parent: AdapterView<*>,
                                          view: View, position: Int, id: Long) {
-                 posMesSubclassFrom = position
-                 calcConversion(posMesSubclassFrom, posMesSubclassTo)
+                 posMeasureSubClassFrom = position
+                 calcConversion(posMeasureSubClassFrom, posMeasureSubClassTo)
              }
 
              override fun onNothingSelected(parent: AdapterView<*>) {
@@ -149,22 +151,22 @@ class MainActivity : AppCompatActivity() {
          }
 
          // Set spinner list for to measure convert
-         subMeasureTypeToSpn = findViewById(R.id.subMeasureTypeToSpn)
+         spnMeasureSubClassTo = findViewById(R.id.spnMeasureSubClassTo)
          // Create an ArrayAdapter using the string array and a default spinner layout
-         adapterTo = ArrayAdapter(
+         adtMeasureSubClassTo = ArrayAdapter(
              this,
              android.R.layout.simple_spinner_item,
              tempArrayMut
          )
-         subMeasureTypeToSpn.adapter = adapterTo
+         spnMeasureSubClassTo.adapter = adtMeasureSubClassTo
 
          //Set spinnerTo on click
-         subMeasureTypeToSpn.onItemSelectedListener = object :
+         spnMeasureSubClassTo.onItemSelectedListener = object :
              AdapterView.OnItemSelectedListener {
              override fun onItemSelected(parent: AdapterView<*>,
                                          view: View, position: Int, id: Long) {
-                 posMesSubclassTo = position
-                 calcConversion(posMesSubclassFrom, posMesSubclassTo)
+                 posMeasureSubClassTo = position
+                 calcConversion(posMeasureSubClassFrom, posMeasureSubClassTo)
              }
 
              override fun onNothingSelected(parent: AdapterView<*>) {
@@ -173,39 +175,29 @@ class MainActivity : AppCompatActivity() {
          }
 
          // Input of quantity
-         subMeasureTypeFromEt = findViewById<EditText>(R.id.subMeasureTypeFromEt)
-         subMeasureTypeFromEt.setText("0.0")
-         subMeasureToTv = findViewById<EditText>(R.id.subMeasureToTv)
-         subMeasureToTv.setText("0.0")
-         subMeasureToTv.setOnFocusChangeListener { _, hasFocus ->
-             if (hasFocus) {
-                 Log.d("tomo focus", "focus .....")
-                 Toast.makeText(this,"Use arrows to scrroll the the result.", Toast.LENGTH_SHORT)
-             } else {
-                 // Nothing
-             }
-         }
-         subMeasureTypeFromEt.setFilters(arrayOf<InputFilter>(InputFilterMinMax(0F, 9999999.99F, 2)))
-         subMeasureTypeFromEt.addTextChangedListener(object : TextWatcher {
+         etMeasureSubClassFrom = findViewById<EditText>(R.id.etMeasureSubClassFrom)
+         tvMeasureSubClassTo = findViewById<EditText>(R.id.tvMeasureSubClassTo)
+         etMeasureSubClassFrom.setFilters(arrayOf<InputFilter>(InputFilterMinMax(0F, 9999999.99F, 2)))
+         etMeasureSubClassFrom.addTextChangedListener(object : TextWatcher {
              override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
                  Log.d("Before------->", s.toString() + " - " +  s.length + " - " + start + " - " + count + " - " + after )
              }
              override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                  Log.d("On------->", s.toString() + " - " +  s.length + " - " + start + " - " + count)
-                 calcConversion(posMesSubclassFrom, posMesSubclassTo)
+                 calcConversion(posMeasureSubClassFrom, posMeasureSubClassTo)
                  /*
                  if(!s.isEmpty()) {
-                     calcConversion(posMesSubclassFrom, posMesSubclassTo)
+                     calcConversion(posMeasureSubClassFrom, posMeasureSubClassTo)
                  }
                  else{
-                     subMeasureToTv.setText("0.0")
-                     //subMeasureTypeFromEt.setText("0.0")
+                     tvMeasureSubClassTo.setText("0.0")
+                     //etMeasureSubClassFrom.setText("0.0")
 
                  }
                  if(!s.isDigitsOnly()){
                      Toast.makeText(this@MainActivity,"Please, enter a valid quantity...", Toast.LENGTH_SHORT)
-                     subMeasureTypeFromEt.setText("")
-                     subMeasureToTv.setText("0.0")
+                     etMeasureSubClassFrom.setText("")
+                     tvMeasureSubClassTo.setText("0.0")
                  }
                   */
              }
@@ -215,51 +207,127 @@ class MainActivity : AppCompatActivity() {
              }
          })
 
+         val button: ImageButton = findViewById(R.id.information)
+         button.setOnClickListener {
+             //Toast.makeText(this, getString(R.string.ConverHelp), Toast.LENGTH_LONG).show()// Code here executes on main thread after user presses button
+         }
      }
 
     // Calc the conversion
     fun calcConversion(fromIndex: Int, toIndex: Int){
         /*
         Log.d("*********",
-            measureFactorArray[posMesClass])
+            arrFactors[posMeasureClass])
         Log.d("???????????", fromIndex.toString() + " - " +
-                toIndex.toString() + " - " + subClassFactorArray.size + " - " + adapterFrom.count)
-        for(i in (0..subClassFactorArray.size-1)){
-            Log.d("###########",i.toString() + " -> " + subClassFactorArray[i])
+                toIndex.toString() + " - " + arrSubClassFactors.size + " - " + adtMeasureSubClassFrom.count)
+        for(i in (0..arrSubClassFactors.size-1)){
+            Log.d("###########",i.toString() + " -> " + arrSubClassFactors[i])
         }
-        Log.d("Index: ", (((fromIndex*subMeasureTypeFromSpn.size)+1)+toIndex).toString()
+        Log.d("Index: ", (((fromIndex*spnMeasureSubClassFrom.size)+1)+toIndex).toString()
         )
         */
-        //var measure: String = subMeasureTypeFromEt.text.toString()
+        //var measure: String = etMeasureSubClassFrom.text.toString()
         //measure.replace("\\s".toRegex(), "")
-        //subMeasureTypeFromEt.setText("$measure")
-        if(!subMeasureTypeFromEt.text.isEmpty()){
+        //etMeasureSubClassFrom.setText("$measure")
+        if(!etMeasureSubClassFrom.text.isEmpty()){
             //val credits = dec.format(number)
             //vValueInterest.text = credits
-            Log.d("Cantidad a convertir:", subMeasureTypeFromEt.text.toString().toFloat().toString())
-            Log.d("Factor: ", subClassFactorArray[fromIndex*(adapterFrom.count)+toIndex])
-            Log.d("Array:", subClassFactorArray.toString())
+            Log.d("Cantidad a convertir:", etMeasureSubClassFrom.text.toString().toFloat().toString())
+            Log.d("Factor: ", arrSubClassFactors[fromIndex*(adtMeasureSubClassFrom.count)+toIndex])
+            Log.d("Array:", arrSubClassFactors.toString())
             val dec = DecimalFormat("#,##0.00#############")
-            if(subClassFactorArray[fromIndex*(adapterFrom.count)+toIndex].startsWith("*")){
-                Log.d("Multiplicar por:", subClassFactorArray[fromIndex*(adapterFrom.count)+toIndex].replaceFirst("*","").toFloat().toString())
-                Log.d("Resultado:", (subMeasureTypeFromEt.text.toString().toFloat() * subClassFactorArray[fromIndex*(adapterFrom.count)+toIndex].replaceFirst("*","").toFloat()).toBigDecimal().toPlainString())
-//                subMeasureToTv.setText((subMeasureTypeFromEt.text.toString().toFloat() * subClassFactorArray[fromIndex*(adapterFrom.count)+toIndex].replaceFirst("*","").toFloat()).toBigDecimal().toPlainString())
-                val result = dec.format((subMeasureTypeFromEt.text.toString().toFloat() * subClassFactorArray[fromIndex*(adapterFrom.count)+toIndex].replaceFirst("*","").toFloat()).toBigDecimal())
-                subMeasureToTv.setText(result)
-                Log.d("Resultado formatead", result)
-            }
-            else{
-                Log.d("Dividir por:", subClassFactorArray[fromIndex*(adapterFrom.count)+toIndex].replaceFirst("/","").toFloat().toString())
-                Log.d("Resultado:", (subMeasureTypeFromEt.text.toString().toFloat() / subClassFactorArray[fromIndex*(adapterFrom.count)+toIndex].replaceFirst("/","").toFloat()).toBigDecimal().toPlainString())
-                //subMeasureToTv.setText((subMeasureTypeFromEt.text.toString().toFloat() / subClassFactorArray[fromIndex*(adapterFrom.count)+toIndex].replaceFirst("/","").toFloat()).toBigDecimal().toPlainString())
-                val result = dec.format((subMeasureTypeFromEt.text.toString().toFloat() / subClassFactorArray[fromIndex*(adapterFrom.count)+toIndex].replaceFirst("/","").toFloat()).toBigDecimal())
-                subMeasureToTv.setText(result)
-                Log.d("Resultado formatead", result)
+            val temp: String = arrSubClassFactors[fromIndex*(adtMeasureSubClassFrom.count)+toIndex].substring(0, 1)
+            Log.d("Operation, zzzzzzzzzzz", temp)
+            when(temp) {
+                //if(arrSubClassFactors[fromIndex*(adtMeasureSubClassFrom.count)+toIndex].startsWith("*")){
+                "*" -> {
+                    Log.d(
+                        "Multiplicar por:",
+                        arrSubClassFactors[fromIndex * (adtMeasureSubClassFrom.count) + toIndex].replaceFirst(
+                            "*",
+                            ""
+                        ).toFloat().toString()
+                    )
+                    Log.d(
+                        "Resultado:",
+                        (etMeasureSubClassFrom.text.toString()
+                            .toFloat() * arrSubClassFactors[fromIndex * (adtMeasureSubClassFrom.count) + toIndex].replaceFirst(
+                            "*",
+                            ""
+                        ).toFloat()).toBigDecimal().toPlainString()
+                    )
+                    //                tvMeasureSubClassTo.setText((etMeasureSubClassFrom.text.toString().toFloat() * arrSubClassFactors[fromIndex*(adtMeasureSubClassFrom.count)+toIndex].replaceFirst("*","").toFloat()).toBigDecimal().toPlainString())
+                    //                val result = dec.format((etMeasureSubClassFrom.text.toString().toFloat() * arrSubClassFactors[fromIndex*(adtMeasureSubClassFrom.count)+toIndex].replaceFirst("*","").toFloat()).toBigDecimal())
+                    //                val result =   dec.format(etMeasureSubClassFrom.text.toString().toFloat() * arrSubClassFactors[fromIndex*(adtMeasureSubClassFrom.count)+toIndex].replaceFirst("*","").toFloat()).toString()
+                    val result = (etMeasureSubClassFrom.text.toString()
+                        .toFloat() * arrSubClassFactors[fromIndex * (adtMeasureSubClassFrom.count) + toIndex].replaceFirst(
+                        "*",
+                        ""
+                    ).toFloat()).toString()
+                    tvMeasureSubClassTo.setText(result)
+                    //tvMeasureSubClassTo.setText("1234567890123456789.000123456")
+                    Log.d("Resultado formatead", result)
+                }
+                "/" -> {
+                    Log.d(
+                        "Dividir por:",
+                        arrSubClassFactors[fromIndex * (adtMeasureSubClassFrom.count) + toIndex].replaceFirst(
+                            "/",
+                            ""
+                        ).toFloat().toString()
+                    )
+                    Log.d(
+                        "Resultado:",
+                        (etMeasureSubClassFrom.text.toString()
+                            .toFloat() / arrSubClassFactors[fromIndex * (adtMeasureSubClassFrom.count) + toIndex].replaceFirst(
+                            "/",
+                            ""
+                        ).toFloat()).toBigDecimal().toPlainString()
+                    )
+                    //tvMeasureSubClassTo.setText((etMeasureSubClassFrom.text.toString().toFloat() / arrSubClassFactors[fromIndex*(adtMeasureSubClassFrom.count)+toIndex].replaceFirst("/","").toFloat()).toBigDecimal().toPlainString())
+//                val result = dec.format((etMeasureSubClassFrom.text.toString().toFloat() / arrSubClassFactors[fromIndex*(adtMeasureSubClassFrom.count)+toIndex].replaceFirst("/","").toFloat()).toBigDecimal())
+//                val result = dec.format(etMeasureSubClassFrom.text.toString().toFloat() / arrSubClassFactors[fromIndex*(adtMeasureSubClassFrom.count)+toIndex].replaceFirst("/","").toFloat()).toString()
+                    val result = (etMeasureSubClassFrom.text.toString()
+                        .toFloat() / arrSubClassFactors[fromIndex * (adtMeasureSubClassFrom.count) + toIndex].replaceFirst(
+                        "/",
+                        ""
+                    ).toFloat()).toString()
+                    tvMeasureSubClassTo.setText(result)
+                    //tvMeasureSubClassTo.setText("1234567890123456789.000123456")
+                    Log.d("Resultado formatead", result)
+                }
+                "-" -> {
+                    Log.d(
+                        "Dividir por:",
+                        arrSubClassFactors[fromIndex * (adtMeasureSubClassFrom.count) + toIndex].replaceFirst(
+                            "-",
+                            ""
+                        ).toFloat().toString()
+                    )
+                    Log.d(
+                        "Resultado:",
+                        (arrSubClassFactors[fromIndex * (adtMeasureSubClassFrom.count) + toIndex].replaceFirst(
+                            "-",
+                            ""
+                        ).toFloat() / etMeasureSubClassFrom.text.toString()
+                            .toFloat() ).toBigDecimal().toPlainString()
+                    )
+                    //tvMeasureSubClassTo.setText((etMeasureSubClassFrom.text.toString().toFloat() / arrSubClassFactors[fromIndex*(adtMeasureSubClassFrom.count)+toIndex].replaceFirst("/","").toFloat()).toBigDecimal().toPlainString())
+//                val result = dec.format((etMeasureSubClassFrom.text.toString().toFloat() / arrSubClassFactors[fromIndex*(adtMeasureSubClassFrom.count)+toIndex].replaceFirst("/","").toFloat()).toBigDecimal())
+//                val result = dec.format(etMeasureSubClassFrom.text.toString().toFloat() / arrSubClassFactors[fromIndex*(adtMeasureSubClassFrom.count)+toIndex].replaceFirst("/","").toFloat()).toString()
+                    val result = (arrSubClassFactors[fromIndex * (adtMeasureSubClassFrom.count) + toIndex].replaceFirst(
+                        "-",
+                        ""
+                    ).toFloat() / etMeasureSubClassFrom.text.toString().toFloat()).toString()
+                    tvMeasureSubClassTo.setText(result)
+                    //tvMeasureSubClassTo.setText("1234567890123456789.000123456")
+                    Log.d("Resultado formatead", result)
+                }
             }
             Log.d("NOEmpty", "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB")
         }
         else{
-            //subMeasureTypeFromEt.setText("0.0")
+            //etMeasureSubClassFrom.setText("0.0")
             Log.d("Empty", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
         }
     }
@@ -268,7 +336,7 @@ class MainActivity : AppCompatActivity() {
 class InputFilterMinMax(min:Float, max:Float, decimals: Int): InputFilter {
     private var min:Float = 0.0F
     private var max:Float = 0.0F
-    private var decimals =0
+    private var decimals = 0
 
     init{
         this.min = min
@@ -293,7 +361,7 @@ class InputFilterMinMax(min:Float, max:Float, decimals: Int): InputFilter {
         {
             val input = (dest.subSequence(0, dstart).toString() + source + dest.subSequence(dend, dest.length)).toFloat()
             Log.d("Input", input.toString())
-            //isInDecimals(input, 2, subMeasureTypeFromEt)
+            //isInDecimals(input, 2, etMeasureSubClassFrom)
             if (isInRange(min, max, input) && isInDecimals(input, decimals))
                 return null
         }

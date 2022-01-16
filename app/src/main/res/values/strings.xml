@@ -4,4 +4,8 @@
     <string name="measure_types_options">Measure type options:</string>
     <string name="convert_result">%1$d</string>
     <string name="ConverHelp">Horizontal scroll available, if necessary.</string>
+    <string name="convert_from">Convert From:</string>
+    <string name="to">To</string>
+    <string name="image_view">Image view</string>
+    <string name="input_measure">Input measure</string>
 </resources>

@@ -6,6 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:alpha="0.1"
+        android:contentDescription="@string/image_view"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/calcbagrn"
+        tools:ignore="ImageContrastCheck" />
+
     <TextView
         android:id="@+id/measureTypeTv"
         android:layout_width="0dp"
@@ -16,13 +30,13 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.022" />
+        app:layout_constraintVertical_bias="0.33" />
 
     <Spinner
-        android:id="@+id/measureTypeSpn"
+        android:id="@+id/spnMeasureClass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
@@ -33,26 +47,27 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/measureTypeTv"
-        app:layout_constraintVertical_bias="0.017" />
+        app:layout_constraintVertical_bias="0.017"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/subMeasureTypeFromTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
-        android:text="Convert From:"
+        android:text="@string/convert_from"
         android:textAlignment="center"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.26"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/measureTypeSpn"
+        app:layout_constraintTop_toBottomOf="@+id/spnMeasureClass"
         app:layout_constraintVertical_bias="0.0" />
 
     <Spinner
-        android:id="@+id/subMeasureTypeFromSpn"
-        android:layout_width="143dp"
+        android:id="@+id/spnMeasureSubClassFrom"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -60,75 +75,104 @@
         app:layout_constraintHorizontal_bias="0.201"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/subMeasureTypeFromTv"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/subMeasureTypeToTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
-        android:text="To"
+        android:text="@string/to"
         android:textAlignment="center"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.686"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/measureTypeSpn"
+        app:layout_constraintTop_toBottomOf="@+id/spnMeasureClass"
         app:layout_constraintVertical_bias="0.0" />
 
     <Spinner
-        android:id="@+id/subMeasureTypeToSpn"
-        android:layout_width="143dp"
+        android:id="@+id/spnMeasureSubClassTo"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
+        android:scrollbarAlwaysDrawHorizontalTrack="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.225"
-        app:layout_constraintStart_toEndOf="@+id/subMeasureTypeFromSpn"
+        app:layout_constraintStart_toEndOf="@+id/spnMeasureSubClassFrom"
         app:layout_constraintTop_toBottomOf="@+id/subMeasureTypeToTv"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
     <EditText
-        android:id="@+id/subMeasureTypeFromEt"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
+        android:id="@+id/etMeasureSubClassFrom"
+        android:layout_width="160dp"
+        android:layout_height="39dp"
         android:layout_margin="16dp"
         android:layout_marginTop="1dp"
-        android:hint="Input"
-        android:inputType="numberDecimal"
+        android:autofillHints=""
         android:digits="0123456789."
+        android:hint="@string/input_measure"
+        android:inputType="numberDecimal"
         android:singleLine="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.171"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/subMeasureTypeFromSpn"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/spnMeasureSubClassFrom"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
-    <HorizontalScrollView android:layout_width="120dp"
-        android:layout_height="wrap_content"
+    <!-- Image button resized, To resize change layout_width and layout_height -->
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView"
+        android:layout_width="145dp"
+        android:layout_height="38dp"
+        android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.202"
-        app:layout_constraintStart_toEndOf="@+id/subMeasureTypeFromEt"
-        app:layout_constraintTop_toBottomOf="@+id/subMeasureTypeToSpn"
-        app:layout_constraintVertical_bias="0.039">
+        app:layout_constraintStart_toEndOf="@+id/etMeasureSubClassFrom"
+        app:layout_constraintTop_toBottomOf="@+id/spnMeasureSubClassTo"
+        app:layout_constraintVertical_bias="0.025">
+
         <TextView
-            android:id="@+id/subMeasureToTv"
+            android:id="@+id/tvMeasureSubClassTo"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:textSize="18sp"
+            android:background="@android:color/darker_gray"
+            android:gravity="end"
+            android:scrollHorizontally="true"
             android:singleLine="true"
-            android:focusable="true"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="18sp"
             android:tooltipText="Use arrows to scrroll the the result."
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.202"
-            app:layout_constraintStart_toEndOf="@+id/subMeasureTypeFromEt"
-            app:layout_constraintTop_toBottomOf="@+id/subMeasureTypeToSpn"
-            app:layout_constraintVertical_bias="0.039" />
+            app:layout_constraintStart_toEndOf="@+id/etMeasureSubClassFrom"
+            app:layout_constraintTop_toBottomOf="@+id/spnMeasureSubClassTo"
+            app:layout_constraintVertical_bias="0.039"
+            tools:targetApi="o" />
     </HorizontalScrollView>
 
+    <ImageButton
+        android:id="@+id/information"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:background="@drawable/round_button"
+        android:contentDescription="@string/image_view"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/horizontalScrollView"
+        app:layout_constraintTop_toTopOf="@+id/spnMeasureClass"
+        app:layout_constraintVertical_bias="0.283"
+        app:srcCompat="@mipmap/measure_help_icon"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 </androidx.constraintlayout.widget.ConstraintLayout>
