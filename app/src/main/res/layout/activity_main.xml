@@ -41,14 +41,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
         android:contentDescription="@string/measure_types_options"
+        android:minHeight="48dp"
         android:windowSoftInputMode="stateAlwaysHidden"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/measureTypeTv"
-        app:layout_constraintVertical_bias="0.017"
-        tools:ignore="TouchTargetSizeCheck" />
+        app:layout_constraintVertical_bias="0.017" />
 
     <TextView
         android:id="@+id/subMeasureTypeFromTv"
@@ -75,8 +75,7 @@
         app:layout_constraintHorizontal_bias="0.201"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/subMeasureTypeFromTv"
-        app:layout_constraintVertical_bias="0.0"
-        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/subMeasureTypeToTv"
@@ -104,8 +103,7 @@
         app:layout_constraintHorizontal_bias="0.225"
         app:layout_constraintStart_toEndOf="@+id/spnMeasureSubClassFrom"
         app:layout_constraintTop_toBottomOf="@+id/subMeasureTypeToTv"
-        app:layout_constraintVertical_bias="0.0"
-        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+        app:layout_constraintVertical_bias="0.0"/>
 
     <EditText
         android:id="@+id/etMeasureSubClassFrom"
@@ -113,7 +111,6 @@
         android:layout_height="39dp"
         android:layout_margin="16dp"
         android:layout_marginTop="1dp"
-        android:autofillHints=""
         android:digits="0123456789."
         android:hint="@string/input_measure"
         android:inputType="numberDecimal"
@@ -123,8 +120,7 @@
         app:layout_constraintHorizontal_bias="0.171"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spnMeasureSubClassFrom"
-        app:layout_constraintVertical_bias="0.0"
-        tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
+        app:layout_constraintVertical_bias="0.0"/>
 
     <!-- Image button resized, To resize change layout_width and layout_height -->
     <HorizontalScrollView
@@ -156,14 +152,13 @@
             app:layout_constraintHorizontal_bias="0.202"
             app:layout_constraintStart_toEndOf="@+id/etMeasureSubClassFrom"
             app:layout_constraintTop_toBottomOf="@+id/spnMeasureSubClassTo"
-            app:layout_constraintVertical_bias="0.039"
-            tools:targetApi="o" />
+            app:layout_constraintVertical_bias="0.039"/>
     </HorizontalScrollView>
 
     <ImageButton
         android:id="@+id/information"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:background="@drawable/round_button"
         android:contentDescription="@string/image_view"
         android:scaleType="fitCenter"
@@ -172,7 +167,6 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/horizontalScrollView"
         app:layout_constraintTop_toTopOf="@+id/spnMeasureClass"
-        app:layout_constraintVertical_bias="0.283"
-        app:srcCompat="@mipmap/measure_help_icon"
-        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+        app:layout_constraintVertical_bias="0.321"
+        app:srcCompat="@mipmap/measure_help_icon" />
 </androidx.constraintlayout.widget.ConstraintLayout>
